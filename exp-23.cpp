@@ -1,144 +1,38 @@
 #include <stdio.h>
-#include <stdlib.h>
-
-
-struct Node
-{
-	int data;
-	struct Node* next;
-};
-
-
-struct Node* SortedMerge(struct Node* a,
-						struct Node* b);
-void FrontBackSplit(struct Node* source,
-					struct Node** frontRef,
-					struct Node** backRef);
-
-void MergeSort(struct Node** headRef)
-{
-	struct Node* head = *headRef;
-	struct Node* a;
-	struct Node* b;
-
-	
-	if ((head == NULL) ||
-		(head->next == NULL))
-	{
-		return;
-	}
-
-	
-	FrontBackSplit(head, &a, &b);
-
-	
-	MergeSort(&a);
-	MergeSort(&b);
-
-	
-	*headRef = SortedMerge(a, b);
-}
-
-
-struct Node* SortedMerge(struct Node* a,
-						struct Node* b)
-{
-	struct Node* result = NULL;
-
-	
-	if (a == NULL)
-		return (b);
-	else if (b == NULL)
-		return (a);
-
-	if (a->data <= b->data)
-	{
-		result = a;
-		result->next =
-				SortedMerge(a->next, b);
-	}
-	else
-	{
-		result = b;
-		result->next = SortedMerge(a, b->next);
-	}
-	return (result);
-}
-
-
-void FrontBackSplit(struct Node* source,
-					struct Node** frontRef,
-					struct Node** backRef)
-{
-	struct Node* fast;
-	struct Node* slow;
-	slow = source;
-	fast = source->next;
-
-	while (fast != NULL)
-	{
-		fast = fast->next;
-		if (fast != NULL)
-		{
-			slow = slow->next;
-			fast = fast->next;
-		}
-	}
-
-	*frontRef = source;
-	*backRef = slow->next;
-	slow->next = NULL;
-}
-
-
-void printList(struct Node* node)
-{
-	while (node != NULL)
-	{
-		printf("%d,", node->data);
-		node = node->next;
-	}
-}
-
-
-void push(struct Node** head_ref,
-		int new_data)
-{
-	
-	struct Node* new_node =
-		(struct Node*)malloc(sizeof(struct Node));
-
-	
-	new_node->data = new_data;
-
-	
-	new_node->next = (*head_ref);
-
-	
-	(*head_ref) = new_node;
-}
-
-
 int main()
-{
-	
-	struct Node* res = NULL;
-	struct Node* a = NULL;
-
-	
-	push(&a, 11);
-	push(&a, 32);
-	push(&a, 5);
-	push(&a, 90);
-	push(&a, 13);
-	push(&a, 12);
-
-	
-	MergeSort(&a);
-
-	printf("Sorted Linked List is: \n");
-	printList(a);
-
-	getchar();
-	return 0;
-}
+    {
+        static int array[10][10];
+        int i, j, m, n, sum = 0;
+        printf("Enter the order of the matrix\n");
+        scanf("%d %d", &m, &n);
+        printf("Enter the co-efficients of the matrix\n");
+        for (i = 0; i < m; ++i)
+        {
+            for (j = 0; j < n; ++j) 
+            {
+                scanf("%d", &array[i][j]);
+            }
+        }
+        for (i = 0; i < m; ++i) 
+        {
+            for (j = 0; j < n; ++j) 
+            {
+                sum = sum + array[i][j] ;
+            }
+            printf("Sum of the %d row is = %d\n", i, sum);
+            sum = 0;
+        }
+        sum = 0;
+        for (j = 0; j < n; ++j) 
+        {
+            for (i = 0; i < m; ++i)
+            {
+                sum = sum + array[i][j];
+            }
+            printf("Sum of the %d column is = %d\n", j, sum);
+            sum = 0;
+ 
+        }
+ return 0;
+ 
+    }
