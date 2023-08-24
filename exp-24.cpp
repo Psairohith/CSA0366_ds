@@ -1,29 +1,68 @@
-#include <stddef.h>
-#include <stdio.h>
-
-char * my_strstr(char * param_1, char * param_2) {
-    int i;
-    int j;
-    for (i = 0; param_1[i] != '\0'; i++) {
-      printf("this is a loop for j %c\n", param_1[i]);
-      for (j = 0; param_2[j] != '\0'; j++) {
-        printf("this is a loop for j %c\n", param_2[j]);
-        if (param_1[i] == param_2[j]) {
-          printf("figuring out this %c\n", param_1[i]);
-          j++;
-          i++;
-          return &param_1[i];
-          printf("figuring out this %c\n", param_1[i]);
-        }
-      }
-    }
-  }
-
-int main() {
-  char * param_1 = "apple";
-  char * param_2 = "pple";
-
-  printf("This is the string %s \n", my_strstr(param_1, param_2));
-
-  return 0;
+#include <bits/stdc++.h>  
+using namespace std; 
+   
+struct node 
+{ 
+    int key; 
+    struct node *left, *right; 
+}; 
+struct node *newNode(int item) 
+{ 
+    struct node *temp =  (struct node *)malloc(sizeof(struct node)); 
+    temp->key = item; 
+    temp->left = temp->right = NULL; 
+    return temp; 
+} 
+struct node* insert(struct node* node, int key) 
+{ 
+    struct node *newNode(int );
+    if (node == NULL) return newNode(key); 
+    if (key < node->key) 
+        node->left  = insert(node->left, key); 
+    else if (key > node->key) 
+        node->right = insert(node->right, key);    
+    return node; 
+} 
+int minValue(struct node* node)  
+{  
+    struct node* current = node;  
+    while (current->left != NULL)  
+    {  
+        current = current->left;  
+    }  
+    return(current->key);  
+}  
+int maxValue(struct node* node)  
+{  
+    struct node* current = node;  
+    while (current->right != NULL)  
+    {  
+        current = current->right;  
+    }  
+    return(current->key);  
+}  
+int main() 
+{ 
+    int maxValue(struct node* );
+    struct node* insert(struct node* , int );
+    int minValue(struct node* ); 
+    struct node *root = NULL; 
+    root = insert(root, 2); 
+    insert(root, 3); 
+    insert(root, 8); 
+    insert(root, 5); 
+    insert(root, 6); 
+    insert(root, 4); 
+    insert(root, 5); 
+    insert(root, 5);
+    insert(root, 10);
+    insert(root, 9);
+    insert(root, 20);
+    insert(root, 11);
+    insert(root, 18);
+    insert(root, 12);
+    insert(root, 2);
+    cout << "\n Minimum value in BST is " << minValue(root)<<endl;  
+    cout << "\n Maximum value in BST is " << maxValue(root);  
+    return 0; 
 }
