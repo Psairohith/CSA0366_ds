@@ -1,25 +1,44 @@
-#include<stdio.h>
+#include <stdio.h>
+#include <limits.h>
+#define V 4
+int min(int a, int b)
+{
+    return (a < b) ? a : b;
+}
+int tsp(int graph[][V], int mask, int pos, int n, int dp[][V])
+{
+	if(mask==(1<<n)-1)
+    return graph[pos][0];
+    if(dp[mask][pos]!=-1)
+    return dp[mask][pos];
+    int ans=INT_MAX;
+    for(int city=0;city<n;city++)
+	{
+        if((mask & (1<<city))== 0)
+		{ 
+            int newAns = graph[pos][city] + tsp(graph, mask | (1 << city), city, n, dp);
+            ans = min(ans, newAns);
+        }
+    }
+    return dp[mask][pos] = ans;
+}
 int main()
 {
-	int val,n,i,flag=0,p,a[i];
-	printf("Enter the number of elements in  array:");
-	scanf("%d",&n);
-	printf("Enter the Elements in array:");
-	for(i=0;i<n;i++)
+    int graph[V][V] = {
+        {0, 9, 5, 2},
+        {1, 0, 6, 5},
+        {7, 9, 0, 2},
+        {7, 5, 3, 0}
+    };
+    int dp[1<<V][V];
+    for(int i=0;i<(1<<V);i++)
 	{
-		scanf("%d",&a[i]);
-	}
-	printf("Enter the value to be search:");
-	scanf("%d",&val);
-	for(i=0;i<n;i++)
-	if(a[i]==val)
-	{
-		flag=1; 
-		p=i;
-		
-	}
-	if(flag==1)
-	printf("given number %d is found at %d",val,p+1);
-	else
-	printf("given number %d not found");
+        for(int j=0;j<V;j++)
+		{
+            dp[i][j]=-1;
+        }
+    }
+    int minEdges=tsp(graph,1,0,V,dp);
+    printf("Minimum edges required: %d\n", minEdges);
+    return 0;
 }
